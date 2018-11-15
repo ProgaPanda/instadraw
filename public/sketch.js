@@ -4,7 +4,7 @@ function setup() {
   createCanvas(400, 480);
   background(51);
   //socket client instance
-  socket = io.connect("http://localhost:3000");
+  socket = io.connect(window.location.hostname);
   //setup a listener for broadcast
   socket.on("broadcast", data => {
     fill(255, 204, 0);
