@@ -12,7 +12,7 @@ function setup() {
     ellipse(data.x, data.y, 15, 15);
   });
   socket.on("broudcast_img", data => {
-    createImage(data.url, function(img) {
+    loadImage(data.url, function(img) {
       image(img, data.x, data.y);
       console.log(data);
       let image = document.createElement("img");
