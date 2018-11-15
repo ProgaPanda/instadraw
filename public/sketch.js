@@ -15,8 +15,8 @@ function setup() {
     createImage(data.url, function(img) {
       image(img, data.x, data.y);
       console.log(data);
-      let img = document.createElement("img");
-      img.src = data.url;
+      let image = document.createElement("img");
+      image.src = data.url;
     });
   });
 }
