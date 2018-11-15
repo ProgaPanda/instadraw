@@ -1,4 +1,5 @@
 let socket;
+
 function setup() {
   createCanvas(400, 480);
   background(51);
@@ -13,11 +14,13 @@ function setup() {
   socket.on("broudcast_img", data => {
     loadImage(data.url, function(img) {
       image(img, data.x, data.y);
+      console.log(data);
     });
   });
 }
 
 function draw() {
+  let img_url = document.querySelector("#imgURL").value;
   let data = {
     x: mouseX,
     y: mouseY
@@ -25,8 +28,9 @@ function draw() {
   let data_img = {
     x: mouseX,
     y: mouseY,
-    url: "L1Rkvn.png"
+    url: img_url
   };
+
   if (mouseIsPressed) {
     fill(255, 255, 255);
 
