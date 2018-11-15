@@ -2,12 +2,12 @@ let socket;
 function loadImgErrFix(errEvt) {
   const pic = errEvt.target;
 
-  if (!pic.crossOrigin)  return p.print(`Failed to reload ${pic.src}!`);
+  if (!pic.crossOrigin) return p.print(`Failed to reload ${pic.src}!`);
 
   p.print(`Attempting to reload ${pic.src} as a tainted image now...`);
-  pic.crossOrigin = null, pic.src = pic.src;
+  (pic.crossOrigin = null), (pic.src = pic.src);
 }
-});
+
 function setup() {
   createCanvas(400, 480);
   background(51);
@@ -20,12 +20,16 @@ function setup() {
     ellipse(data.x, data.y, 15, 15);
   });
   socket.on("broudcast_img", data => {
-    loadImage(data.url, function(img) {
-      image(img, data.x, data.y);
-      console.log(data);
-      let image = document.createElement("img");
-      image.src = data.url;
-    }, loadImgErrFix);
+    loadImage(
+      data.url,
+      function(img) {
+        image(img, data.x, data.y);
+        console.log(data);
+        let image = document.createElement("img");
+        image.src = data.url;
+      },
+      loadImgErrFix
+    );
   });
 }
 
