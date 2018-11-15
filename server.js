@@ -5,17 +5,7 @@ const socket = require("socket.io");
 const app = express();
 //host public folder
 app.use(express.static("public"));
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  //<--you can change this with a specific url like http://localhost:4200
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin,X-Requested-With,Content-Type,Accept,content-type,application/json,Authorization"
-  );
-  next();
-});
+
 var port = process.env.PORT || 3000; // Use the port that Heroku provides or default to 5000
 
 //server listen on port
