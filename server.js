@@ -6,7 +6,8 @@ const app = express();
 //host public folder
 app.use(express.static("public"));
 
-var port = process.env.PORT || 3000; // Use the port that Heroku provides or default to 5000
+// Use the port that Heroku provides or default to 3000
+var port = process.env.PORT || 3000;
 
 //server listen on port
 const server = app.listen(port, function() {
