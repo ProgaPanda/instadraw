@@ -28,8 +28,4 @@ function newConnection(socket) {
     //broadcast data to all listeners
     socket.broadcast.emit("broadcast", data);
   });
-
-  socket.on("image", data => {
-    socket.broadcast.emit("broudcast_img", data);
-  });
 }

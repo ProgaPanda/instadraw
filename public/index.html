@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta
+       name='viewport'
+       content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+  />  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="libraries/p5.min.js" charset="utf-8"></script>
   <script src="sketch.js"></script>
   <script src="/socket.io/socket.io.js"></script>
@@ -12,7 +14,15 @@
 </head>
 <body>
 
-<input type="text" id="imgURL" name="imgURL" placeholder="image url">
+<!-- <input type="text" id="imgURL" name="imgURL" placeholder="image url"> -->
 
 </body>
+
+<style media="screen">
+  html,body{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+</style>
 </html>

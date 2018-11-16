@@ -1,50 +1,65 @@
 let socket;
-
+let data;
+let points = [];
 function setup() {
-  createCanvas(400, 480);
+  createCanvas(window.innerWidth, window.innerHeight);
   background(51);
-  //socket client instance
+
+  //check if in dev mode
   hostname =
     window.location.hostname == "localhost"
       ? "http://localhost:3000"
       : window.location.hostname;
+
+  //socket client instance
   socket = io.connect(hostname);
   //setup a listener for broadcast
+  let points = [];
   socket.on("broadcast", data => {
-    fill(255, 204, 0);
-    noStroke();
-    ellipse(data.x, data.y, 15, 15);
-  });
-  socket.on("broudcast_img", data => {
-    loadImage(data.url, function(img) {
-      image(img, data.x, data.y);
-      console.log(data);
-      let image = document.createElement("img");
-      image.src = data.url;
-    });
+    points.push(createVector(data.x, data.y));
+
+    stroke(255);
+    noFill();
+    beginShape();
+    for (let i = 1; i < points.length; i++) {
+      let x = points[i].x;
+      let y = points[i].y;
+      console.log(data.newLine);
+      if (data.newLine) {
+        points = [];
+      }
+      vertex(x, y);
+    }
+    endShape();
   });
 }
 
 function draw() {
-  let img_url = document.querySelector("#imgURL").value;
-  let data = {
-    x: mouseX,
-    y: mouseY
-  };
-  let data_img = {
+  data = {
     x: mouseX,
     y: mouseY,
-    url: img_url
+    newLine: false
   };
 
   if (mouseIsPressed) {
-    fill(255, 255, 255);
-
-    noStroke();
-    ellipse(mouseX, mouseY, 15, 15);
+    points.push(createVector(mouseX, mouseY));
+    stroke(255);
+    noFill();
+    beginShape();
+    for (let i = 0; i < points.length; i++) {
+      let x = points[i].x;
+      let y = points[i].y;
+      vertex(x, y);
+    }
+    endShape();
 
     //send the cordenator data
     socket.emit("cords", data);
-    socket.emit("image", data_img);
   }
+}
+
+function mouseReleased() {
+  data.newLine = true;
+  socket.emit("cords", data);
+  points = [];
 }
