@@ -18,10 +18,12 @@ function setup() {
   socket.on("broadcast", data => {
     points.push(createVector(data.x, data.y));
 
-    stroke(255);
+    stroke(255, 204, 0);
+    strokeWeight(4);
+
     noFill();
     beginShape();
-    for (let i = 1; i < points.length; i++) {
+    for (let i = 0; i < points.length; i++) {
       let x = points[i].x;
       let y = points[i].y;
       console.log(data.newLine);
@@ -44,6 +46,8 @@ function draw() {
   if (mouseIsPressed) {
     points.push(createVector(mouseX, mouseY));
     stroke(255);
+    strokeWeight(4);
+
     noFill();
     beginShape();
     for (let i = 0; i < points.length; i++) {
