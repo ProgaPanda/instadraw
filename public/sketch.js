@@ -2,7 +2,7 @@ let socket;
 let data;
 let points = [];
 function setup() {
-  createCanvas(window.innerWidth, window.innerHeight);
+  createCanvas(window.innerWidth, window.outerHeight + 20);
   background(51);
 
   //check if in dev mode
