@@ -26,7 +26,6 @@ function setup() {
     for (let i = 0; i < points.length; i++) {
       let x = points[i].x;
       let y = points[i].y;
-      console.log(data.newLine);
       if (data.newLine) {
         points = [];
       }
