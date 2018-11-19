@@ -33,6 +33,12 @@ function setup() {
     }
     endShape();
   });
+
+  socket.on("clients_counter", counter => {
+    textSize(32);
+    fill(255);
+    text("Online: " + counter, 10, 30);
+  });
 }
 
 function draw() {
