@@ -11,6 +11,7 @@ function preload() {
 function setup() {
   let canvas = createCanvas(window.innerWidth, window.innerHeight);
   canvas.parent("canvas");
+  window.scrollTo(0, 1);
 
   background(51);
 
