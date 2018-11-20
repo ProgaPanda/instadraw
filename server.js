@@ -22,7 +22,7 @@ io.sockets.on("connection", newConnection);
 function newConnection(socket) {
   console.log("socket id:" + socket.id);
   clients++;
-  socket.emit("clients_counter", clients);
+  io.sockets.emit("clients_counter", clients);
 
   //take the data from the broadcaster
   socket.on("cords", data => {
@@ -32,6 +32,9 @@ function newConnection(socket) {
   });
 
   socket.on("disconnect", disconnected);
+  socket.on("clear", () => {
+    io.sockets.emit("clear-client", "dd");
+  });
 }
 
 function disconnected(socket) {

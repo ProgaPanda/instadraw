@@ -63,6 +63,13 @@ function setup() {
     }
     endShape();
   });
+
+  $(".clear-button").click(() => {
+    socket.emit("clear");
+  });
+  socket.on("clear-client", () => {
+    background(51);
+  });
 }
 
 function draw() {
