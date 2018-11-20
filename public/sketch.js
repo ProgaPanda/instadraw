@@ -1,9 +1,38 @@
 let socket;
 let data;
 let points = [];
+let font;
+let current_color;
+let color_picking = false;
+function preload() {
+  font = loadFont("css/fonts/DancingScript-Bold.ttf");
+}
+
 function setup() {
-  createCanvas(window.innerWidth, window.innerHeight + 20);
+  let canvas = createCanvas(window.innerWidth, window.innerHeight);
+  canvas.parent("canvas");
+
   background(51);
+
+  $(".colorPickSelector").colorPick({
+    initialColor: "#ecf0f1",
+    allowRecent: false,
+    palette: [
+      "#ecf0f1",
+      "#f1c40f",
+      "#1abc9c",
+      "#2980b9",
+      "#9b59b6",
+      "#34495e",
+      "#2c3e50",
+      "#c0392b",
+      "#bdc3c7"
+    ],
+    onColorSelected: function() {
+      this.element.css({ backgroundColor: this.color, color: this.color });
+      current_color = this.color;
+    }
+  });
 
   //check if in dev mode
   hostname =
@@ -18,11 +47,11 @@ function setup() {
   socket.on("broadcast", data => {
     points.push(createVector(data.x, data.y));
 
-    stroke(255, 204, 0);
+    stroke(data.color);
     strokeWeight(4);
-
     noFill();
     beginShape();
+
     for (let i = 0; i < points.length; i++) {
       let x = points[i].x;
       let y = points[i].y;
@@ -33,26 +62,20 @@ function setup() {
     }
     endShape();
   });
-
-  socket.on("clients_counter", counter => {
-    textSize(32);
-    fill(255);
-    text("Online: " + counter, 10, 30);
-  });
 }
 
 function draw() {
   data = {
     x: mouseX,
     y: mouseY,
+    color: current_color,
     newLine: false
   };
 
-  if (mouseIsPressed) {
+  if (mouseIsPressed && !color_picking) {
     points.push(createVector(mouseX, mouseY));
-    stroke(255);
+    stroke(current_color);
     strokeWeight(4);
-
     noFill();
     beginShape();
     for (let i = 0; i < points.length; i++) {
@@ -65,6 +88,11 @@ function draw() {
     //send the cordenator data
     socket.emit("cords", data);
   }
+
+  socket.on("clients_counter", counter => {
+    let users_text = document.querySelector(".online-users");
+    users_text.innerHTML = `<i class="fas fa-users"></i> ${counter}`;
+  });
 }
 
 function mouseReleased() {
@@ -72,3 +100,5 @@ function mouseReleased() {
   socket.emit("cords", data);
   points = [];
 }
+
+//js

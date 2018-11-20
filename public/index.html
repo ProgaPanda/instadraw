@@ -8,27 +8,24 @@
   />
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#333333">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="libraries/colorPick.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <script src="libraries/p5.min.js" charset="utf-8"></script>
+  <script src="libraries/jquery-3.3.1.min.js" charset="utf-8"></script>
+  <script src="libraries/colorPick.min.js" charset="utf-8"></script>
   <script src="sketch.js"></script>
   <script src="/socket.io/socket.io.js"></script>
 
   <title>socketshare</title>
 </head>
 <body>
-
-<!-- <input type="text" id="imgURL" name="imgURL" placeholder="image url"> -->
-
+  <nav class="head">
+    <p class="online-users"></p>
+    <h3 class="logo">InstaDraw</h3>
+    <div class="colorPickSelector"></div>
+  </nav>
+  <div id="canvas"></div>
 </body>
 
-<style media="screen">
-  canvas {
-    overflow-y: hidden;
-  }
-  html,body{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    overflow-y: hidden;
-  }
-</style>
 </html>
