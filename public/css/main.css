@@ -19,9 +19,9 @@ html {
 }
 body {
   height: 100%;
-  /* position: fixed; /* prevent overscroll bounce*/
+  position: fixed; /* prevent overscroll bounce*/
   overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch; /* iOS velocity scrolling */
 }
 
 .head {
