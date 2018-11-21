@@ -9,9 +9,6 @@ function preload() {
 }
 
 function setup() {
-  document.body.addEventListener("touchmove", function(e) {
-    e.preventDefault();
-  });
   let canvas = createCanvas(window.innerWidth, window.innerHeight);
   canvas.parent("canvas");
   window.scrollTo(0, 1);
@@ -72,6 +69,9 @@ function setup() {
   });
   socket.on("clear-client", () => {
     background(51);
+  });
+  $(".save-button").click(() => {
+    save("myDrawing.png");
   });
 }
 
