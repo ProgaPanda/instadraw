@@ -1,6 +1,7 @@
 const express = require("express");
 const socket = require("socket.io");
-
+//currently stored drawing to be served for the new client
+let store = [];
 //express instance
 const app = express();
 //host public folder
@@ -24,16 +25,23 @@ function newConnection(socket) {
   clients++;
   io.sockets.emit("clients_counter", clients);
 
+  //send the stored drawing to the new client only
+  socket.emit("stored_drawing", store);
+
   //take the data from the broadcaster
   socket.on("cords", data => {
     console.log(data);
+    store.push(data);
     //broadcast data to all listeners
     socket.broadcast.emit("broadcast", data);
   });
 
   socket.on("disconnect", disconnected);
   socket.on("clear", () => {
-    io.sockets.emit("clear-client", "dd");
+    //clear stored drawing
+    store = [];
+    //send clear canvas event
+    io.sockets.emit("clear-client");
   });
 }
 

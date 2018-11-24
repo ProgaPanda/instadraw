@@ -43,6 +43,23 @@ function setup() {
 
   //socket client instance
   socket = io.connect(hostname);
+  socket.on("stored_drawing", data => {
+    beginShape();
+    strokeWeight(4);
+    noFill();
+
+    for (let i = 0; i < data.length; i++) {
+      let x = data[i].x;
+      let y = data[i].y;
+      stroke(data[i].color);
+      vertex(x, y);
+      if (data[i].newLine) {
+        endShape();
+        beginShape();
+      }
+    }
+  });
+
   //setup a listener for broadcast
   let points = [];
   socket.on("broadcast", data => {
