@@ -15,9 +15,10 @@ function setup() {
 
   background(51);
 
-  $(".colorPickSelector").colorPick({
+  var colorPicker = $(".colorPickSelector").colorPick({
     initialColor: "#ecf0f1",
     allowRecent: false,
+    returnColor: "#000",
     palette: [
       "#ecf0f1",
       "#f1c40f",
@@ -32,6 +33,7 @@ function setup() {
     onColorSelected: function() {
       this.element.css({ backgroundColor: this.color, color: this.color });
       current_color = this.color;
+      returnColor = this.color;
     }
   });
 
@@ -43,6 +45,8 @@ function setup() {
 
   //socket client instance
   socket = io.connect(hostname);
+
+  //load current drawing for the newly connected client
   socket.on("stored_drawing", data => {
     beginShape();
     strokeWeight(4);
@@ -79,6 +83,20 @@ function setup() {
       vertex(x, y);
     }
     endShape();
+  });
+
+  var isErasing = false;
+  $(".eraser-button").on("click", function() {
+    $(this).toggleClass("eraser-button-activated");
+
+    //toggle between eraser and current color
+    if (!isErasing) {
+      current_color = "#333333";
+      isErasing = true;
+    } else {
+      current_color = returnColor;
+      isErasing = false;
+    }
   });
 
   $(".clear-button").click(() => {
@@ -128,5 +146,3 @@ function mouseReleased() {
   socket.emit("cords", data);
   points = [];
 }
-
-//js

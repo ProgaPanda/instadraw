@@ -87,7 +87,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   bottom: 60px;
-  width: 175px;
+  width: 235px;
 }
 
 .button {
@@ -112,6 +112,24 @@ body {
   outline: none;
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+
+.eraser-button {
+  width: 50px;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  color: #ffffffd6;
+  background-color: #dc4e76;
+  -webkit-box-shadow: inset 0 -2px #612e3c;
+  box-shadow: inset 0 -2px #612e3c;
+  border-bottom: 2px solid #612e3c;
+  font-weight: 100;
+}
+
+.eraser-button-activated {
+  background-color: #823e51;
+  box-shadow: inset 0 0 #612e3c;
+  color: #dc4e76;
 }
 
 .clear-button {
