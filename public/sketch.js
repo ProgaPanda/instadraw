@@ -4,6 +4,8 @@ let points = [];
 let font;
 let current_color;
 let color_picking = false;
+let isErasing = false;
+let STROKE_WEIGHT = 4;
 function preload() {
   font = loadFont("css/fonts/DancingScript-Bold.ttf");
 }
@@ -70,7 +72,7 @@ function setup() {
     points.push(createVector(data.x, data.y));
 
     stroke(data.color);
-    strokeWeight(4);
+    strokeWeight(data.strokeWeight);
     noFill();
     beginShape();
 
@@ -85,19 +87,23 @@ function setup() {
     endShape();
   });
 
-  var isErasing = false;
   $(".eraser-button").on("click", function() {
     $(this).toggleClass("eraser-button-activated");
-
     //toggle between eraser and current color
     if (!isErasing) {
       current_color = "#333333";
       isErasing = true;
+      STROKE_WEIGHT = 16;
     } else {
       current_color = returnColor;
       isErasing = false;
+      STROKE_WEIGHT = 4;
     }
   });
+
+  // socket.on("change_STROKE_WEIGHT", weight => {
+  //   STROKE_WEIGHT = weight;
+  // });
 
   $(".clear-button").click(() => {
     socket.emit("clear");
@@ -106,7 +112,8 @@ function setup() {
     background(51);
   });
   $(".save-button").click(() => {
-    save("myDrawing.png");
+    const id = Math.floor(random(13081997));
+    save(`instadraw-${id}.png`);
   });
 }
 
@@ -115,13 +122,14 @@ function draw() {
     x: mouseX,
     y: mouseY,
     color: current_color,
-    newLine: false
+    newLine: false,
+    strokeWeight: STROKE_WEIGHT
   };
 
   if (mouseIsPressed && !color_picking) {
     points.push(createVector(mouseX, mouseY));
     stroke(current_color);
-    strokeWeight(4);
+    strokeWeight(STROKE_WEIGHT);
     noFill();
     beginShape();
     for (let i = 0; i < points.length; i++) {
